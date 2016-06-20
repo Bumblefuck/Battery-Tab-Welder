@@ -2,11 +2,11 @@
 	MicroView Arduino Library
 	Copyright (C) 2014 GeekAmmo
  MicroView Battery Tab Welder
- CopyLEFT (use and abuse as you see fit) 2016 AvE 
- This is an Arduino sketch for use with a battery tab / spot welder 
+ CopyLEFT (use and abuse as you see fit) 2016 AvE
+ This is an Arduino sketch for use with a battery tab / spot welder
  it uses the microview from sparkfun. The microview is a ATTiny arduino-esq board with a built in OLED display.
  tested and working on microview from sparkfun and programmer from sparkfun and Arduino IDE 1.6.8
- Noise from solenoids sometimes cause uview to hang. Use a momentary "dead man" switch as precaution. Or not. Be sure to get vid of resulting fire. 
+ Noise from solenoids sometimes cause uview to hang. Use a momentary "dead man" switch as precaution. Or not. Be sure to get vid of resulting fire.
 */
 #include < MicroView.h >
 const int sensorPin = A0; // pin 7 on uview select the input pin for the potentiometer
@@ -18,18 +18,15 @@ int energize = 0; // variable to store the value of the buttonPin that starts th
 MicroViewWidget * vWidget2; // this is a vertical star trek sick bay (the original) bar graph with triangle pointer
 
 void setup() {
-
     uView.begin();
     uView.clear(PAGE);
     pinMode(weldPin, OUTPUT);
     pinMode(buttonPin, INPUT);
     digitalWrite(weldPin, LOW); // this is just to make sure the weldPin is LOW before anything gets started
     vWidget2 = new MicroViewSlider(10, 0, 200, 2000, WIDGETSTYLE3); // this sets the position of the slider (horizontal, vertical, low value, high value)
-
 }
 
 void loop() {
-
     // read the value from the sensor:
     sensorValue = analogRead(sensorPin); // this is the pot to control the pulse time in milliseconds
 
@@ -38,14 +35,13 @@ void loop() {
 
     energize = digitalRead(buttonPin); // checks to see if the weld button is pressed and sets the value of energize to LOW or HIGH
 
-    vWidget2 - > setValue(sensorValue); // sets the cursor on the bar graph to whatever the pot is reading after conversion to milliseconds
+    vWidget2->setValue(sensorValue); // sets the cursor on the bar graph to whatever the pot is reading after conversion to milliseconds
     uView.display(); // dunno what this does but it's in every sketch with the microview. it must enable the write of the previous instruction or similar
     uView.print(" ms"); // this is to add units (milliseconds) to the bar graph
     uView.display();
 
     // we checked the buttonPin previously and set energize to that value; if it's HIGH it'll start the weld sequence
     if (energize == HIGH) {
-
         uView.clear(PAGE);
         delay(2); // clear page
 
@@ -77,8 +73,6 @@ void loop() {
 
         uView.clear(PAGE);
         delay(2);
-        vWidget2 - > reDraw(); // this re-draws the bar gauge, otherwise it acts weird
-
+        vWidget2->reDraw(); // this re-draws the bar gauge, otherwise it acts weird
     }
-
 }

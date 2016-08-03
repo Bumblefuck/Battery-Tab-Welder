@@ -21,7 +21,7 @@ void setup() {
     uView.begin();
     uView.clear(PAGE);
     pinMode(weldPin, OUTPUT);
-    pinMode(buttonPin, INPUT);
+    pinMode(buttonPin, INPUT_PULLUP);  //INPUT_PULLUP turns on an internal pullup resistor that is on the chip.
     digitalWrite(weldPin, LOW); // this is just to make sure the weldPin is LOW before anything gets started
     vWidget2 = new MicroViewSlider(10, 0, 200, 2000, WIDGETSTYLE3); // this sets the position of the slider (horizontal, vertical, low value, high value)
 }
@@ -40,8 +40,8 @@ void loop() {
     uView.print(" ms"); // this is to add units (milliseconds) to the bar graph
     uView.display();
 
-    // we checked the buttonPin previously and set energize to that value; if it's HIGH it'll start the weld sequence
-    if (energize == HIGH) {
+    // we checked the buttonPin previously and set energize to that value; if it's LOW (groudned) it'll start the weld sequence
+    if (energize == LOW) {
         uView.clear(PAGE);
         delay(2); // clear page
 
